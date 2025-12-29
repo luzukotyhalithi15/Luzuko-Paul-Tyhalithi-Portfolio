@@ -1,3 +1,7 @@
+// Mobile menu toggle - declare variables first
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -15,25 +19,31 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Mobile menu toggle
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-
 hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
     hamburger.classList.toggle('active');
 });
 
-// Navbar background change on scroll
+// Navbar background change on scroll with throttling
 const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
+let ticking = false;
+
+function updateNavbar() {
     if (window.scrollY > 50) {
         navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
         navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
     } else {
         navbar.style.backgroundColor = 'var(--bg-color)';
     }
-});
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(updateNavbar);
+        ticking = true;
+    }
+}, { passive: true });
 
 // Form submission handler
 const contactForm = document.getElementById('contactForm');
@@ -75,11 +85,12 @@ document.querySelectorAll('section').forEach(section => {
     observer.observe(section);
 });
 
-// Active navigation link highlighting
+// Active navigation link highlighting with throttling
 const sections = document.querySelectorAll('section[id]');
 const navLinksList = document.querySelectorAll('.nav-link');
+let tickingNav = false;
 
-window.addEventListener('scroll', () => {
+function updateActiveNav() {
     let current = '';
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -95,7 +106,15 @@ window.addEventListener('scroll', () => {
             link.classList.add('active');
         }
     });
-});
+    tickingNav = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!tickingNav) {
+        window.requestAnimationFrame(updateActiveNav);
+        tickingNav = true;
+    }
+}, { passive: true });
 
 // Typing effect for hero subtitle (optional enhancement)
 const heroSubtitle = document.querySelector('.hero-subtitle');
@@ -114,25 +133,23 @@ function typeWriter() {
 // Start typing effect after a short delay
 setTimeout(typeWriter, 500);
 
-// Add scroll to top button functionality
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Show/hide scroll to top button (if you want to add one)
-    if (scrollTop > 300) {
-        // Button would appear here if we add it to HTML
-    } else {
-        // Button would disappear
-    }
-});
+// Parallax effect for hero section with throttling
+let tickingParallax = false;
 
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
+function updateParallax() {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero');
     if (hero) {
         hero.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
-});
+    tickingParallax = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!tickingParallax) {
+        window.requestAnimationFrame(updateParallax);
+        tickingParallax = true;
+    }
+}, { passive: true });
 
 console.log('Portfolio website loaded successfully!');
