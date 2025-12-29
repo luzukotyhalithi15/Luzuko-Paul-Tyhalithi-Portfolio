@@ -118,20 +118,22 @@ window.addEventListener('scroll', () => {
 
 // Typing effect for hero subtitle (optional enhancement)
 const heroSubtitle = document.querySelector('.hero-subtitle');
-const originalText = heroSubtitle.textContent;
-heroSubtitle.textContent = '';
+if (heroSubtitle) {
+    const originalText = heroSubtitle.textContent;
+    heroSubtitle.textContent = '';
 
-let charIndex = 0;
-function typeWriter() {
-    if (charIndex < originalText.length) {
-        heroSubtitle.textContent += originalText.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeWriter, 100);
+    let charIndex = 0;
+    function typeWriter() {
+        if (charIndex < originalText.length) {
+            heroSubtitle.textContent += originalText.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 100);
+        }
     }
-}
 
-// Start typing effect after a short delay
-setTimeout(typeWriter, 500);
+    // Start typing effect after a short delay
+    setTimeout(typeWriter, 500);
+}
 
 // Parallax effect for hero section with throttling
 let tickingParallax = false;
@@ -140,7 +142,7 @@ function updateParallax() {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero');
     if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        hero.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0)`;
     }
     tickingParallax = false;
 }
