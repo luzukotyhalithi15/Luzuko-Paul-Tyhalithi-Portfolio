@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luzuko Paul Tyhalithi — Data Analyst</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS (Animate on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* Debug overrides removed */
+
+        :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#2dd4bf;--accent-2:#60a5fa}
+        *{box-sizing:border-box}
+        body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial; background:var(--bg); color:#e6eef6}
+        header{position:sticky;top:0;z-index:2000;background:rgba(8,12,20,.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.03)}
+        /* Ensure brand is always visible above overlays */
+        .navbar-brand{color:#eaf6ff !important;position:relative;z-index:2101;font-weight:800}
+        .nav-link{color:#cfe8f5 !important}
+        .nav-link.active{color:var(--accent) !important;font-weight:600}
+        /* Hero + background */
+        #hero{min-height:72vh;display:flex;align-items:center;position:relative;overflow:hidden}
+        #tsparticles{position:absolute;inset:0;z-index:0;opacity:0.28;pointer-events:none}
+                header, .navbar, .navbar-brand, .hero, main, .container, footer{position:relative;z-index:10000}
+
+                /* Hide heavy visuals on small screens to reduce distraction */
+                @media (max-width: 768px){
+                    #tsparticles, #cursorParticles, #cursorTrail{display:none !important}
+                }
+        .hero-inner{position:relative;z-index:2;padding:4rem 1rem;text-align:left}
+        .hero-title{font-size:2.2rem;font-weight:700;color:#ffffff}
+        .hero-sub{font-size:1.2rem;color:var(--accent);margin-bottom:.6rem}
+        .typing{color:#e6eef6;font-weight:600}
+        /* Summary typed with gradient highlight */
+        .summary-typed{font-size:1rem;color:#e6eef6;line-height:1.45}
+        .summary-typed .typed-gradient{background:linear-gradient(90deg,#60a5fa,#2dd4bf,#9b7bff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+        /* soft animated gradient behind hero summary */
+        #hero::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(9,12,20,0.15), transparent 40%), radial-gradient(circle at 10% 20%, rgba(96,165,250,0.06), transparent 12%), radial-gradient(circle at 90% 80%, rgba(45,212,191,0.04), transparent 12%);pointer-events:none;z-index:1;mix-blend-mode:screen;opacity:0.95;animation:heroFlow 10s linear infinite}
+        @keyframes heroFlow{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+        .pointer{display:inline-block;transition:transform .18s ease,box-shadow .18s;}
+        .pointer:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 6px 18px rgba(45,212,191,.12)}
+        /* Skill radial */
+        .skill-svg{width:120px;height:120px}
+        .skill-label{font-size:.95rem;color:#eaf5f2;margin-top:.5rem}
+        .skill-wrap{text-align:center}
+        /* Skill card modern styles */
+        .skill-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;border:1px solid rgba(255,255,255,0.03);transition:transform .28s,box-shadow .28s}
+        .skill-card:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(45,212,191,0.06)}
+        .skill-icon{width:74px;height:74px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#021428, #072033);position:relative}
+        .skill-icon .initial{font-weight:800;color:transparent;background:linear-gradient(90deg,#60a5fa,#2dd4bf,#9b7bff);-webkit-background-clip:text;background-clip:text;font-size:1.05rem}
+        .skill-card:hover .skill-icon{filter:drop-shadow(0 18px 40px rgba(96,165,250,0.12))}
+        .skill-prog{width:74px;height:74px;position:absolute;left:0;top:0}
+                /* ripple for icons */
+                .icon-ripple{position:absolute;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:screen}
+        /* Timeline */
+        .timeline{position:relative;padding-left:1rem}
+        .timeline::before{content:'';position:absolute;left:20px;top:0;width:4px;height:100%;background:linear-gradient(180deg,var(--accent),var(--accent-2));border-radius:4px}
+        .timeline-item{position:relative;margin-bottom:2.2rem;padding-left:3rem}
+        .timeline-item::before{content:'';position:absolute;left:12px;width:18px;height:18px;border-radius:50%;background:#0b1220;border:4px solid var(--accent)}
+        /* Education flip card */
+        .flip-card{perspective:1000px}
+        .flip-inner{position:relative;width:100%;height:180px;text-align:center;transition:transform .6s;transform-style:preserve-3d}
+        .flip-card:hover .flip-inner{transform:rotateY(180deg)}
+        .flip-front,.flip-back{position:absolute;inset:0;border-radius:.5rem;background:linear-gradient(180deg,#071020, #0b1220);display:flex;align-items:center;justify-content:center;padding:1rem;backface-visibility:hidden;border:1px solid rgba(255,255,255,.03)}
+        .flip-back{transform:rotateY(180deg);background:linear-gradient(180deg,#0b1220,#071428)}
+                /* Education card enhancements */
+                .edu-card .flip-front, .edu-card .flip-back{border-radius:12px;border:1px solid rgba(96,165,250,0.06);box-shadow:0 12px 30px rgba(2,6,12,0.5)}
+                .edu-card .flip-front h5{font-weight:800;color:#eaf6ff}
+                .edu-card .flip-back p{color:#d3e8f2}
+        /* Carousel soft skills */
+        .soft-icon{font-size:1.6rem;color:var(--accent)}
+        /* Footer */
+        footer{background:#06111b;padding:2.5rem 0;border-top:1px solid rgba(255,255,255,.03)}
+        a.social{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#021022;margin:0 .25rem;text-decoration:none;transition:transform .18s}
+        a.social:hover{transform:translateY(-6px)}
+                /* Responsive tweaks */
+                @media(min-width:992px){.hero-title{font-size:3.2rem}}
+
+                /* Data Analyst Icon styles (scoped) */
+                :root{
+                    --da-bg:#071227; --da-card:#081420; --da-accent1:#60a5fa; --da-accent2:#2dd4bf; --da-accent3:#9b7bff; --da-muted:#9fb3c8;
+                }
+                .da-icon{width:360px;max-width:92vw;margin:18px;position:relative;--size:360px;cursor:pointer;user-select:none}
+                .da-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:18px; padding:18px; box-shadow:0 8px 30px rgba(2,6,12,0.6); overflow:visible; position:relative}
+                svg{width:100%;height:auto;display:block}
+                .matrix-grid{fill:none;stroke:rgba(255,255,255,0.02);stroke-width:1}
+                .person{fill:url(#grad-sil)}
+                .person-glow{filter:drop-shadow(0 6px 18px rgba(45,212,191,0.08));transition:filter .25s ease}
+                .laptop{fill:#0b1a27;stroke:rgba(255,255,255,0.04);stroke-width:1}
+                .chart{fill:var(--da-accent2);opacity:0.95;transition:transform .35s cubic-bezier(.2,.9,.2,1),filter .2s; transform-origin:center}
+                .chart:hover{transform:translateY(-6px) scale(1.06);filter:drop-shadow(0 8px 22px rgba(45,212,191,0.12))}
+                .orbit{transform-origin:50% 50%; animation:orbit 12s linear infinite}
+                @keyframes orbit{from{transform:rotate(0deg)} to{transform:rotate(360deg)}}
+                .bar rect{animation:barPulse 1.1s infinite ease-in-out}
+                .bar rect:nth-child(1){animation-delay:0s}
+                .bar rect:nth-child(2){animation-delay:.2s}
+                .bar rect:nth-child(3){animation-delay:.4s}
+                .bar rect:nth-child(4){animation-delay:.6s}
+                @keyframes barPulse{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)} }
+                .bar rect{transform-origin:50% 100%}
+                .pie .slice{transform-origin:50% 50%; animation:piePulse 2s infinite ease-in-out}
+                @keyframes piePulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+                .da-tooltip{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 10px);background:linear-gradient(90deg,var(--da-accent2),var(--da-accent1));padding:6px 10px;border-radius:8px;color:#021022;font-weight:600;font-size:13px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
+                .da-tooltip.visible{opacity:1;transform:translateX(-50%) translateY(-6px)}
+                .details{position:absolute;left:50%;top:50%;transform:translate(-50%, -10px) scale(.95);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:10px;border-radius:12px;min-width:220px;max-width:86%;box-shadow:0 12px 30px rgba(2,6,12,0.6);opacity:0;pointer-events:none;transition:opacity .22s,transform .22s}
+                .details.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+                .detail-badge{display:inline-block;background:linear-gradient(90deg,var(--da-accent1),var(--da-accent2));color:#021022;padding:6px 10px;border-radius:999px;margin:4px 6px;font-weight:700;font-size:13px}
+                .da-card:hover .glow-target{filter:drop-shadow(0 12px 26px rgba(96,165,250,0.12));}
+                canvas.trail{position:absolute;inset:0;border-radius:18px;pointer-events:none}
+                @media (max-width:420px){.da-icon{--size:320px}}
+                /* Projects section styles */
+                .projects{padding:3rem 0}
+                .project-card{background:linear-gradient(180deg,#071428,#0b1220);border-radius:12px;padding:0;overflow:hidden;transition:transform .28s,box-shadow .28s;border:1px solid rgba(255,255,255,0.03)}
+                .project-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(45,212,191,0.06)}
+                .project-media{overflow:hidden;border-radius:6px;position:relative;aspect-ratio:16/9;background:#021424}
+                .project-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s var(--motion-duration),filter .45s var(--motion-duration);cursor:pointer}
+                .project-thumb:hover{transform:scale(1.04);filter:brightness(1.06) saturate(1.04)}
+                .cover-link{position:absolute;inset:0;z-index:20}
+                .project-caption{position:absolute;left:12px;right:12px;bottom:12px;background:linear-gradient(180deg, rgba(2,6,12,0.36), rgba(2,6,12,0.6));backdrop-filter:blur(6px);border-radius:8px;padding:8px 12px;z-index:30}
+                .project-caption .project-title{font-weight:800;color:#eaf6ff}
+                .preview-btn{z-index:40}
+                .project-media:hover .project-thumb{transform:scale(1.06)}
+
+                /* Mobile adjustments for project card */
+                @media (max-width: 576px){
+                    .project-media{aspect-ratio: 4/3}
+                    .project-caption{position:static; margin-top:-8px; background:linear-gradient(180deg, rgba(2,6,12,0.18), rgba(2,6,12,0.42)); padding:10px; border-radius:6px}
+                    .project-caption .small{font-size:.78rem}
+                    .project-body{padding:12px}
+                    .project-thumb{transition:none}
+                }
+                .project-thumb.skeleton{border-radius:6px}
+                /* Lightbox / modal for project image */
+                .img-modal{position:fixed;inset:0;background:rgba(2,6,12,0.82);display:flex;align-items:center;justify-content:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .18s}
+                .img-modal.show{opacity:1;pointer-events:auto}
+                .img-modal .modal-inner{max-width:92vw;max-height:92vh;border-radius:8px;overflow:hidden;box-shadow:0 28px 80px rgba(2,6,12,0.6);background:#021424;padding:12px}
+                .img-modal img{display:block;max-width:100%;max-height:78vh;border-radius:6px}
+                .img-modal .close-btn{position:absolute;right:18px;top:18px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021022;border-radius:8px;padding:6px 8px;font-weight:700;cursor:pointer}
+                .project-body{padding:16px}
+                .project-title{font-weight:700;color:#eaf6ff}
+                .project-desc{color:#bcd8e6;font-size:.95rem}
+                .project-links{margin-top:10px}
+                .project-badge{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021022;padding:6px 10px;border-radius:999px;font-weight:700;margin-right:.5rem}
+                .project-overlay{position:relative}
+                .project-expand{position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,6,12,0.88),rgba(2,6,12,0.95));padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;transform:translateY(12px);opacity:0;pointer-events:none;transition:opacity .22s,transform .22s}
+                .project-card.expanded .project-expand{opacity:1;pointer-events:auto;transform:translateY(0)}
+                .project-pointer{position:absolute;width:22px;height:22px;border-radius:6px;background:linear-gradient(90deg,var(--accent-2),var(--accent));box-shadow:0 10px 26px rgba(96,165,250,0.12);transform:translate(-50%,-50%);pointer-events:none;z-index:30}
+                .project-canvas{position:absolute;inset:0;pointer-events:none}
+                /* Decorative project cover when screenshot removed */
+                .project-cover{height:160px;border-radius:6px;background:linear-gradient(135deg,#061826 0%, #072033 40%, #0b2a3a 100%);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.06);font-weight:700;font-size:1.1rem}
+                .project-cover::after{content:'MICT SP Performance Analytics';color:rgba(255,255,255,0.06);letter-spacing:1px}
+                /* Achievements & Projects Section */
+                .achievements-section{position:relative;overflow:hidden;background:linear-gradient(135deg, rgba(96,165,250,0.08), rgba(45,212,191,0.06), rgba(155,123,255,0.04));padding:4rem 0;border-top:1px solid rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.03)}
+                .achievements-header{text-align:center;margin-bottom:3rem}
+                .achievements-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:2rem;margin-top:2rem}
+                .achievement-card{background:linear-gradient(180deg,rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(96,165,250,0.08);border-radius:16px;padding:2rem;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative;overflow:hidden}
+                .achievement-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(96,165,250,0.06),rgba(45,212,191,0.04));opacity:0;transition:opacity .3s;pointer-events:none;z-index:0}
+                .achievement-card:hover{transform:translateY(-12px);box-shadow:0 24px 60px rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.2)}
+                .achievement-card:hover::before{opacity:1}
+                .achievement-content{position:relative;z-index:1}
+                .counter-value{font-size:3.5rem;font-weight:900;background:linear-gradient(90deg,#60a5fa,#2dd4bf,#9b7bff);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;line-height:1}
+                .counter-label{font-size:1.1rem;color:#bcd8e6;margin-top:0.5rem;font-weight:600}
+                .cert-badge{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021022;padding:0.6rem 1.2rem;border-radius:999px;font-weight:700;font-size:0.85rem;margin-top:1rem;box-shadow:0 8px 24px rgba(96,165,250,0.16)}
+                .cert-badge.highlight{background:linear-gradient(90deg,#fbbf24,#f59e0b);box-shadow:0 8px 24px rgba(251,191,36,0.2)}
+                .project-showcase-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:2.5rem;margin-top:2.5rem}
+                .showcase-card{background:linear-gradient(180deg,#071428,#0b1220);border-radius:14px;overflow:hidden;transition:transform .32s,box-shadow .32s,border-color .32s;border:1px solid rgba(96,165,250,0.06);position:relative}
+                .showcase-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(96,165,250,0.0),rgba(45,212,191,0.08));opacity:0;transition:opacity .32s;pointer-events:none;z-index:5}
+                .showcase-card:hover{transform:translateY(-16px);box-shadow:0 32px 80px rgba(96,165,250,0.18);border-color:rgba(96,165,250,0.16)}
+                .showcase-card:hover::after{opacity:1}
+                .showcase-media{width:100%;height:220px;background:linear-gradient(135deg,#051826,#072033);overflow:hidden;position:relative}
+                .showcase-media img{width:100%;height:100%;object-fit:cover;transition:transform .4s,filter .4s}
+                .showcase-card:hover .showcase-media img{transform:scale(1.08);filter:brightness(1.12) saturate(1.06)}
+                .showcase-body{padding:1.8rem}
+                .showcase-title{font-size:1.3rem;font-weight:800;color:#eaf6ff;margin-bottom:0.6rem}
+                .showcase-desc{color:#bcd8e6;font-size:0.95rem;line-height:1.55;margin-bottom:1.2rem}
+                .showcase-tech{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:1rem}
+                .tech-tag{display:inline-block;background:rgba(96,165,250,0.08);color:#8dd3f7;padding:0.4rem 0.8rem;border-radius:6px;font-size:0.8rem;font-weight:600;border:1px solid rgba(96,165,250,0.12)}
+                .showcase-link{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021022;padding:0.7rem 1.6rem;border-radius:8px;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 20px rgba(96,165,250,0.16)}
+                .showcase-link:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(96,165,250,0.24)}
+                .achievement-ripple{position:absolute;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:screen}
+                @media (max-width: 768px){.counter-value{font-size:2.8rem}.achievements-grid{grid-template-columns:1fr}.project-showcase-grid{grid-template-columns:1fr}}
+                        /* Design tokens & global UI */
+                        :root{
+                            --warm-1:#ffedd5; --warm-2:#ffd8b5; --brand:#ff7a59; --muted-2:#9fb3c8;
+                            --bg-1:#061016; --card-1:#071227; --accent:#2dd4bf; --accent-2:#60a5fa;
+                            --focus-ring: 3px solid rgba(45,212,191,0.14);
+                            --motion-duration: 320ms;
+                        }
+                        /* Light theme overrides */
+                        [data-theme="light"]{
+                            --bg:#f7fbff; --card:#ffffff; --muted:#334155; --accent:#0066ff; --accent-2:#00cca3; --focus-ring: 3px solid rgba(0,102,255,0.12);
+                        }
+
+                /* Global pointer (custom) */
+                .global-cursor{position:fixed;left:0;top:0;width:28px;height:28px;border-radius:6px;transform:translate(-50%,-50%) scale(1);pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:transform .18s var(--motion-duration),opacity .12s}
+                .global-cursor .arrow{width:0;height:0;border-left:14px solid rgba(255,255,255,0.95);border-top:7px solid transparent;border-bottom:7px solid transparent;transform:rotate(18deg);filter:drop-shadow(0 8px 30px rgba(96,165,250,0.12))}
+                .global-cursor .glow{position:absolute;inset:-6px;border-radius:8px;background:radial-gradient(circle at 30% 30%, rgba(96,165,250,0.18), rgba(45,212,191,0.06));opacity:.98}
+
+                /* Magnetic button */
+                .magnetic{display:inline-block;position:relative;transition:transform .28s cubic-bezier(.2,.9,.2,1);will-change:transform}
+                .magnetic .magnet-target{display:inline-block;transition:transform .22s cubic-bezier(.2,.9,.2,1)}
+
+                /* Page transitions & reduced-motion */
+                .page-fade{transition:opacity .42s ease, transform .42s ease;opacity:1}
+                .page-fade.is-exiting{opacity:0;transform:translateY(6px)}
+                @media (prefers-reduced-motion: reduce){
+                    :root{--motion-duration:1ms}
+                    *{animation-duration:0.001ms !important;animation-delay:0ms !important;transition-duration:0.001ms !important}
+                    .global-cursor{display:none}
+                }
+
+                /* Skeleton image */
+                .skeleton{background:linear-gradient(90deg,rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.02) 75%);background-size:200% 100%;animation:shimmer 1.6s linear infinite}
+                @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+                /* Progress navigation bar */
+                #progressNav{position:fixed;left:0;top:0;height:6px;width:100%;z-index:1500;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent)}
+                #progressNav .progress-inner{height:6px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .12s linear}
+                /* Section heading typed effect styles */
+                .section-heading{font-size:1.6rem;letter-spacing:0.2px;position:relative;display:inline-block;color:#ffffff;padding:.18rem .5rem;border-radius:8px}
+                .section-heading:before{content:'';position:absolute;left:-14px;top:6px;width:8px;height:calc(100% - 12px);background:linear-gradient(180deg,var(--accent-2),var(--accent));border-radius:6px}
+                .section-heading .typed-target{display:inline-block;color:#ffffff;font-weight:800}
+                .section-heading .word-glow{display:inline-block;padding:0 4px;border-radius:6px;transition:box-shadow .18s,transform .18s}
+                .section-heading.hover-glow .word-glow{box-shadow:0 12px 34px rgba(45,212,191,0.12);transform:translateY(-3px) scale(1.04)}
+                .section-heading .typed-cursor{opacity:1;animation:blink 1s steps(2,end) infinite;color:var(--accent-2)}
+                .section-heading:focus{outline:none;box-shadow: var(--focus-ring);border-radius:8px}
+                /* Per-word heading gradient + highlight */
+                .heading-word{display:inline-block;margin-right:6px;padding:0 4px;border-radius:6px;font-weight:800;background:linear-gradient(90deg,#60a5fa,#2dd4bf,#9b7bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+                .heading-word.fallback-white{color:#ffffff;background:none}
+                .heading-word.active{filter:drop-shadow(0 12px 28px rgba(96,165,250,0.16));transform:translateY(-3px) scale(1.04)}
+                @keyframes blink{50%{opacity:0}}
+                /* Restore intended interactive visuals */
+                html, body { background: var(--bg); color: #e6eef6; }
+                /* keep particle layer faint and non-interactive */
+                #tsparticles{position:absolute;inset:0;z-index:0;opacity:0.18;pointer-events:none}
+                #cursorParticles, #cursorTrail{position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.6}
+                .global-cursor{z-index:9999}
+    </style>
+</head>
+<body>
+    <!-- debug banner removed -->
+    <!-- Progress / Navigation bar (clickable) -->
+    <div id="progressNav" aria-hidden="true"><div class="progress-inner" style="width:0%"></div></div>
+
+    <!-- Global custom cursor -->
+    <div class="global-cursor" id="globalCursor" aria-hidden="true" style="opacity:0">
+        <div class="glow"></div>
+        <div class="arrow"></div>
+    </div>
+    <canvas id="cursorTrail" style="position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.6"></canvas>
+    <div id="cursorParticles" style="position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.6"></div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark container">
+            <a class="navbar-brand fw-bold text-white" href="#">Luzuko Paul Tyhalithi</a>
+            <button id="themeToggle" class="btn btn-sm btn-outline-light ms-3" aria-label="Toggle theme">🌓</button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#soft">Soft Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero with particles and typed.js -->
+    <section id="hero">
+        <div id="tsparticles" aria-hidden="true"></div>
+        <div class="container hero-inner">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div data-aos="fade-up">
+                        <div class="hero-title">Hi — I'm Luzuko Paul Tyhalithi</div>
+                        <div class="hero-sub"> <span class="typing"></span></div>
+                        <p class="text-muted summary-typed"><span id="summaryTyped"></span></p>
+                        <div class="mt-4">
+                            <a class="btn btn-outline-light pointer me-2" href="#contact">Contact</a>
+                            <a class="btn btn-primary pointer" href="#experience">View Experience</a>
+                        </div>
+                    </div>
+                </div>
+                                <div class="col-lg-5 text-center" data-aos="zoom-in">
+                                                                                <!-- Integrated Data Analyst Icon component (refined) -->
+                                                                                <div class="da-portal">
+                                                                                    <div class="grid-bg" aria-hidden="true"></div>
+                                                                                    <div class="da-frame" id="daFrame" role="img" aria-label="Interactive Data Analyst icon">
+                                                                                        <div class="da-tip" id="daTip">SQL</div>
+                                                                                        <canvas class="trail" id="trail" width="800" height="800" aria-hidden="true"></canvas>
+                                                                                        <svg viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                                                                                            <defs>
+                                                                                                <linearGradient id="silGrad" x1="0" x2="1">
+                                                                                                    <stop offset="0%" stop-color="#2dd4bf"/>
+                                                                                                    <stop offset="100%" stop-color="#60a5fa"/>
+                                                                                                </linearGradient>
+                                                                                                <linearGradient id="bgGrad" x1="0" x2="0" y1="0" y2="1">
+                                                                                                    <stop offset="0%" stop-color="#051225"/>
+                                                                                                    <stop offset="100%" stop-color="#071227"/>
+                                                                                                </linearGradient>
+                                                                                            </defs>
+                                                                                            <rect x="8" y="8" width="404" height="284" rx="14" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.02)"/>
+                                                                                            <g class="elem" transform="translate(70,70)" data-tip="Insight Engine" id="codeElem">
+                                                                                                <rect class="code" x="-28" y="-18" width="56" height="38" rx="4"></rect>
+                                                                                                <rect x="-20" y="-10" width="40" height="4" rx="2" fill="#0aa3d9"></rect>
+                                                                                                <rect x="-20" y="-2" width="30" height="3" rx="2" fill="#0fbdbf"></rect>
+                                                                                                <rect x="-20" y="6" width="22" height="3" rx="2" fill="#7bd0ff"></rect>
+                                                                                            </g>
+                                                                                            <g class="elem bars" transform="translate(120,200)" data-tip="SQL" id="bars">
+                                                                                                <rect x="-36" y="-28" width="10" height="28" rx="2" fill="#60a5fa"></rect>
+                                                                                                <rect x="-22" y="-44" width="10" height="44" rx="2" fill="#2dd4bf"></rect>
+                                                                                                <rect x="-8" y="-18" width="10" height="18" rx="2" fill="#7bd0ff"></rect>
+                                                                                                <rect x="6" y="-52" width="10" height="52" rx="2" fill="#9b7bff"></rect>
+                                                                                            </g>
+                                                                                            <g class="elem pie-group" transform="translate(300,90)" data-tip="Power BI" id="pie">
+                                                                                                <circle cx="0" cy="0" r="24" fill="#051424" stroke="#0b2a3a" stroke-width="1.5"></circle>
+                                                                                                <path class="slice" d="M0,-24 A24,24 0 0,1 20,-8 L0,0 Z" fill="#60a5fa"></path>
+                                                                                                <path class="slice" d="M20,-8 A24,24 0 0,1 8,20 L0,0 Z" fill="#2dd4bf"></path>
+                                                                                                <path class="slice" d="M8,20 A24,24 0 0,1 -20,12 L0,0 Z" fill="#9b7bff"></path>
+                                                                                            </g>
+                                                                                            <g class="elem db" transform="translate(210,48)" data-tip="MySQL" id="db">
+                                                                                                <ellipse cx="0" cy="0" rx="34" ry="12" fill="#082134"></ellipse>
+                                                                                                <rect x="-34" y="0" width="68" height="36" rx="6" fill="#061826"></rect>
+                                                                                                <ellipse cx="0" cy="36" rx="34" ry="8" fill="#041623"></ellipse>
+                                                                                            </g>
+                                                                                            <g transform="translate(210,170)" class="silhouette-group">
+                                                                                                <path class="silhouette silhouette-glow" d="M-48 40 q22 -36 48 -36 q26 0 48 36 q-38 24 -96 0Z"/>
+                                                                                                <circle cx="0" cy="-30" r="22" class="silhouette"/>
+                                                                                                <path d="M-18 -36 q18 -18 36 0" fill="#021827" opacity="0.9"></path>
+                                                                                                <g transform="translate(-36,6)">
+                                                                                                    <rect x="0" y="0" width="72" height="44" rx="6" fill="#061324" stroke="#0b2a3a"></rect>
+                                                                                                        <rect x="6" y="6" width="60" height="26" rx="3" fill="#021827"></rect>
+                                                                                                        <!-- Embedded generated dashboard image (AI-created SVG) -->
+                                                                                                        <image x="6" y="6" width="60" height="26" preserveAspectRatio="xMidYMid slice" href="assets/generated-dashboard.svg" aria-hidden="true"></image>
+                                                                                                </g>
+                                                                                            </g>
+                                                                                        </svg>
+                                                                                        <div class="da-details" id="details">
+                                                                                            <div style="font-weight:700;margin-bottom:6px;color:#dff6f1">Skills & Tools</div>
+                                                                                            <div style="display:flex;flex-wrap:wrap;justify-content:center">
+                                                                                                <span class="badge-skill">SQL</span>
+                                                                                                <span class="badge-skill">Python</span>
+                                                                                                <span class="badge-skill">Power BI</span>
+                                                                                                <span class="badge-skill">Insight Engine</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="da-pointer" id="daPointer" aria-hidden="true"><div class="pointer-glow"></div><div class="pointer-arrow"></div></div>
+                                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-12" data-aos="fade-right">
+                        <h2 data-aos="fade-up" class="section-heading">About Me</h2>
+                    <p class="text-muted">Data Analyst Associate • CompTIA Data+ • IBM Data Analyst Professional</p>
+                    <p>Experienced with SQL, Python, Power BI and Excel — building dashboards and statistical models to support decision-making.</p>
+                    <div class="mt-3">
+                        <span class="badge bg-secondary me-2">CompTIA Data+</span>
+                        <span class="badge bg-secondary">IBM Data Analyst Professional</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="py-5 bg-dark">
+        <div class="container">
+                <h2 data-aos="fade-up" class="section-heading">Technical Expertise</h2>
+                        <div class="row g-4 mt-3">
+                <!-- Modern skill cards -->
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-bs-toggle="tooltip" title="Expert in SQL">
+                    <div class="skill-card text-center" data-proficiency="100">
+                        <div class="skill-icon" aria-hidden="true">
+                            <svg class="skill-prog" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="sgrad-sql" x1="0" x2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#2dd4bf"/></linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12" />
+                                <circle class="radial" cx="50" cy="50" r="42" fill="none" stroke="url(#sgrad-sql)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" transform="rotate(-90 50 50)"></circle>
+                            </svg>
+                            <span class="initial">SQL</span>
+                        </div>
+                        <div class="skill-label">SQL</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-bs-toggle="tooltip" title="Expert in Python">
+                    <div class="skill-card text-center" data-proficiency="95">
+                        <div class="skill-icon" aria-hidden="true">
+                            <svg class="skill-prog" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="sgrad-py" x1="0" x2="1"><stop offset="0%" stop-color="#9b7bff"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12" />
+                                <circle class="radial" cx="50" cy="50" r="42" fill="none" stroke="url(#sgrad-py)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" transform="rotate(-90 50 50)"></circle>
+                            </svg>
+                            <span class="initial">Py</span>
+                        </div>
+                        <div class="skill-label">Python</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-bs-toggle="tooltip" title="Advanced Power BI">
+                    <div class="skill-card text-center" data-proficiency="92">
+                        <div class="skill-icon" aria-hidden="true">
+                            <svg class="skill-prog" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="sgrad-pbi" x1="0" x2="1"><stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12" />
+                                <circle class="radial" cx="50" cy="50" r="42" fill="none" stroke="url(#sgrad-pbi)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" transform="rotate(-90 50 50)"></circle>
+                            </svg>
+                            <span class="initial">PBI</span>
+                        </div>
+                        <div class="skill-label">Power BI</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-bs-toggle="tooltip" title="Advanced Excel">
+                    <div class="skill-card text-center" data-proficiency="95">
+                        <div class="skill-icon" aria-hidden="true">
+                            <svg class="skill-prog" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="sgrad-xl" x1="0" x2="1"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12" />
+                                <circle class="radial" cx="50" cy="50" r="42" fill="none" stroke="url(#sgrad-xl)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" transform="rotate(-90 50 50)"></circle>
+                            </svg>
+                            <span class="initial">XL</span>
+                        </div>
+                        <div class="skill-label">Excel</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-bs-toggle="tooltip" title="Statistical modeling: R">
+                    <div class="skill-card text-center" data-proficiency="85">
+                        <div class="skill-icon" aria-hidden="true">
+                            <svg class="skill-prog" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="sgrad-r" x1="0" x2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#9b7bff"/></linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12" />
+                                <circle class="radial" cx="50" cy="50" r="42" fill="none" stroke="url(#sgrad-r)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" transform="rotate(-90 50 50)"></circle>
+                            </svg>
+                            <span class="initial">R</span>
+                        </div>
+                        <div class="skill-label">R</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-bs-toggle="tooltip" title="Tableau — Dashboards">
+                    <div class="skill-card text-center" data-proficiency="88">
+                        <div class="skill-icon" aria-hidden="true">
+                            <svg class="skill-prog" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="sgrad-tb" x1="0" x2="1"><stop offset="0%" stop-color="#7b61ff"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12" />
+                                <circle class="radial" cx="50" cy="50" r="42" fill="none" stroke="url(#sgrad-tb)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" transform="rotate(-90 50 50)"></circle>
+                            </svg>
+                            <span class="initial">Tb</span>
+                        </div>
+                        <div class="skill-label">Tableau</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-bs-toggle="tooltip" title="MySQL — Database">
+                    <div class="skill-card text-center" data-proficiency="90">
+                        <div class="skill-icon" aria-hidden="true">
+                            <svg class="skill-prog" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="sgrad-sql2" x1="0" x2="1"><stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="12" />
+                                <circle class="radial" cx="50" cy="50" r="42" fill="none" stroke="url(#sgrad-sql2)" stroke-width="12" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" transform="rotate(-90 50 50)"></circle>
+                            </svg>
+                            <span class="initial">DB</span>
+                        </div>
+                        <div class="skill-label">MySQL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Achievements & Projects Analytics Section -->
+    <section id="achievements" class="achievements-section">
+        <div class="container">
+            <!-- Achievements Header -->
+            <div class="achievements-header" data-aos="fade-up">
+                <h2 class="section-heading">Achievements & Impact</h2>
+                <p class="text-muted mt-3">Real-world projects, certifications, and professional growth</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="achievements-grid">
+                <!-- Projects Completed -->
+                <div class="achievement-card" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="achievement-content">
+                        <span class="counter-value" data-target="2">0</span>
+                        <div class="counter-label">Projects Completed</div>
+                        <div style="font-size:0.9rem;color:#8dd3f7;margin-top:1rem;line-height:1.6">
+                            <div>• MICT SP Performance Analytics</div>
+                            <div>• Crime Stats SA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div class="achievement-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="achievement-content">
+                        <span class="counter-value" data-target="31">0</span>
+                        <div class="counter-label">Certifications Earned</div>
+                        <div class="cert-badge highlight">IBM Certified</div>
+                        <div class="cert-badge">CompTIA Data+</div>
+                    </div>
+                </div>
+
+                <!-- Technologies Mastered -->
+                <div class="achievement-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="achievement-content">
+                        <span class="counter-value" data-target="8">0</span>
+                        <div class="counter-label">Tech Stacks</div>
+                        <div style="font-size:0.9rem;color:#8dd3f7;margin-top:1rem;line-height:1.6">
+                            <div>SQL • Python • Power BI</div>
+                            <div>Excel • R • Tableau • MySQL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Projects -->
+            <div style="margin-top:4rem;text-align:center" data-aos="fade-up">
+                <h3 class="section-heading" style="font-size:1.5rem;margin-bottom:2rem">Featured Projects</h3>
+            </div>
+
+            <div class="project-showcase-grid">
+                <!-- MICT SP Project -->
+                <div class="showcase-card" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="showcase-media">
+                        <img src="assets/mict-dashboard.svg" alt="MICT SP Performance Analytics Dashboard" loading="lazy">
+                    </div>
+                    <div class="showcase-body">
+                        <h4 class="showcase-title">MICT SP Performance Analytics</h4>
+                        <p class="showcase-desc">Digitizes police dockets and enables crime performance analytics. Transforms raw law enforcement data into actionable insights.</p>
+                        <div class="showcase-tech">
+                            <span class="tech-tag">SQL</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Power BI</span>
+                            <span class="tech-tag">Excel</span>
+                        </div>
+                        <a href="https://micts.vercel.app/" target="_blank" rel="noopener" class="showcase-link">Live Demo →</a>
+                    </div>
+                </div>
+
+                <!-- Crime Stats SA Project -->
+                <div class="showcase-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="showcase-media" style="background:linear-gradient(135deg,#0d1f2d,#082a3a)">
+                        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.08);font-size:3rem;font-weight:800">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                    </div>
+                    <div class="showcase-body">
+                        <h4 class="showcase-title">Crime Stats SA</h4>
+                        <p class="showcase-desc">Interactive analytics platform for South African crime statistics. Provides visual dashboards, trend analysis, and geographic insights.</p>
+                        <div class="showcase-tech">
+                            <span class="tech-tag">Analytics</span>
+                            <span class="tech-tag">Dashboard</span>
+                            <span class="tech-tag">Data Viz</span>
+                            <span class="tech-tag">Geographic</span>
+                        </div>
+                        <a href="https://crime-stats-sa-c34f85a1.base44.app/" target="_blank" rel="noopener" class="showcase-link">Live Demo →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience timeline -->
+    <section id="experience" class="py-5">
+        <div class="container">
+                <h2 data-aos="fade-up" class="section-heading">Work Experience</h2>
+            <div class="timeline mt-4">
+                <div class="timeline-item" data-aos="fade-right">
+                    <h5>Data Analyst Associate</h5>
+                    <div class="small text-muted">CAPACITI — Cape Town, South Africa • July 2025 – Present</div>
+                    <p class="mt-2">Applied practical skills in Python, SQL, Power BI, and Excel to clean, analyze, and visualize complex datasets. Collaborated in cross-functional teams to develop interactive dashboards and reports. Delivered findings in professional settings, translating technical analysis into strategic recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education flip cards -->
+    <section id="education" class="py-5 bg-dark">
+        <div class="container">
+                <h2 data-aos="fade-up" class="section-heading">Education</h2>
+            <div class="row mt-4 g-4">
+                <div class="col-md-6" data-aos="flip-left">
+                    <div class="flip-card edu-card">
+                        <div class="flip-inner">
+                            <div class="flip-front">
+                                <div>
+                                    <h5>BEng Tech in Mechanical Engineering</h5>
+                                    <p class="text-muted">University of Johannesburg • 2021–2024</p>
+                                </div>
+                            </div>
+                            <div class="flip-back">
+                                <div>
+                                    <p class="text-muted">Key achievements: Graduated with project distinction. Skills gained: data analysis for engineering, MATLAB, Python for simulations. Certifications: Coursework in statistical methods and project management.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="flip-left" data-aos-delay="120">
+                    <div class="flip-card edu-card">
+                        <div class="flip-inner">
+                            <div class="flip-front">
+                                <div>
+                                    <h5>Secondary Education</h5>
+                                    <p class="text-muted">Sinethemba Senior Secondary School • 2016–2020</p>
+                                </div>
+                            </div>
+                            <div class="flip-back">
+                                <div>
+                                    <p class="text-muted">Highlights: Strong STEM foundation with practical lab experience. Skills: analytical problem solving, teamwork, foundational programming exposure. Awards: Top 5% in mathematics.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Soft Skills carousel -->
+    <section id="soft" class="py-5">
+        <div class="container">
+                <h2 data-aos="fade-up" class="section-heading">Soft Skills</h2>
+            <div id="softCarousel" class="carousel slide mt-4" data-bs-ride="carousel" data-aos="zoom-in">
+                <div class="carousel-inner text-center">
+                    <div class="carousel-item active">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <i class="bi bi-search-heart-fill soft-icon"></i>
+                            <h5 class="mt-3">Analytical Thinking</h5>
+                            <p class="text-muted">Breaking down complex problems into manageable pieces.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <i class="bi bi-chat-quote-fill soft-icon"></i>
+                            <h5 class="mt-3">Communication</h5>
+                            <p class="text-muted">Presenting technical findings to non-technical stakeholders.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <i class="bi bi-people-fill soft-icon"></i>
+                            <h5 class="mt-3">Collaboration</h5>
+                            <p class="text-muted">Working effectively across cross-functional teams.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <i class="bi bi-eyeglasses soft-icon"></i>
+                            <h5 class="mt-3">Attention to Detail</h5>
+                            <p class="text-muted">Ensuring data accuracy and quality.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#softCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+                <button class="carousel-control-next" type="button" data-bs-target="#softCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-5 bg-dark">
+        <div class="container text-center" data-aos="fade-up">
+            <h2 data-aos="fade-up" class="section-heading">Contact</h2>
+            <p class="text-muted">Open to opportunities and collaborations — let's connect.</p>
+            <div class="mt-3">
+                <a class="social" href="mailto:luzuko.tyhalithi@example.com"><i class="bi bi-envelope-fill"></i></a>
+                <a class="social" href="https://linkedin.com/in/luzuko-tyhalithi" target="_blank"><i class="bi bi-linkedin"></i></a>
+                <a class="social" href="https://github.com/lutukopaul" target="_blank"><i class="bi bi-github"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center text-muted">
+            <div>© 2025 Luzuko Paul Tyhalithi — Data Analyst Associate</div>
+        </div>
+    </footer>
+
+    <!-- Scripts: Bootstrap, Typed.js, tsParticles, AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <!-- GSAP for advanced animations (disabled temporarily) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script>
+            (function(){
+                const frame = document.getElementById('daFrame');
+                const tip = document.getElementById('daTip');
+                const details = document.getElementById('details');
+                const pointer = document.getElementById('daPointer');
+                const trail = document.getElementById('trail');
+                const ctx = trail.getContext('2d');
+
+                function resize(){
+                    const r = frame.getBoundingClientRect();
+                    trail.width = Math.round(r.width*2); trail.height = Math.round(r.height*2);
+                    trail.style.width = r.width+'px'; trail.style.height = r.height+'px';
+                    trail.style.left = r.left+'px'; trail.style.top = r.top+'px';
+                    ctx.setTransform(2,0,0,2,0,0);
+                }
+                resize(); window.addEventListener('resize', resize);
+
+                let parts = [];
+                function spawn(x,y){ parts.push({x,y,vx:(Math.random()-0.5)*1.4,vy:(Math.random()-0.5)*1.4,r:1+Math.random()*2,life:40+Math.random()*30}) }
+                function loop(){ ctx.clearRect(0,0,trail.width/2,trail.height/2); for(let i=parts.length-1;i>=0;i--){ const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.life--; const a=p.life/80; if(p.life<=0){parts.splice(i,1);continue} ctx.beginPath(); ctx.fillStyle=`rgba(45,212,191,${a*0.9})`; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill() } requestAnimationFrame(loop) }
+                requestAnimationFrame(loop);
+
+                const elems = Array.from(frame.querySelectorAll('.elem'));
+                elems.forEach(el=>{
+                    el.addEventListener('mouseenter', ()=>{
+                        const tipText = el.getAttribute('data-tip') || 'Info'; tip.textContent = tipText; tip.classList.add('show');
+                        if(el.id === 'bars'){
+                            const rects = el.querySelectorAll('rect'); rects[0].setAttribute('y','-52'); rects[0].setAttribute('height','52'); rects[1].setAttribute('y','-64'); rects[1].setAttribute('height','64'); rects[2].setAttribute('y','-36'); rects[2].setAttribute('height','36'); rects[3].setAttribute('y','-80'); rects[3].setAttribute('height','80');
+                        }
+                        if(el.id === 'pie'){ el.style.transform = 'rotate(24deg)'; }
+                        if(el.id === 'db'){ el.style.transform = 'scale(1.06)'; el.style.opacity = 1; }
+                    });
+                    el.addEventListener('mouseleave', ()=>{
+                        tip.classList.remove('show');
+                        if(el.id === 'bars'){ const rects = el.querySelectorAll('rect'); rects[0].setAttribute('y','-28'); rects[0].setAttribute('height','28'); rects[1].setAttribute('y','-44'); rects[1].setAttribute('height','44'); rects[2].setAttribute('y','-18'); rects[2].setAttribute('height','18'); rects[3].setAttribute('y','-52'); rects[3].setAttribute('height','52'); }
+                        if(el.id === 'pie'){ el.style.transform = '' }
+                        if(el.id === 'db'){ el.style.transform = ''; el.style.opacity = '' }
+                    });
+                });
+
+                frame.addEventListener('mousemove', (e)=>{
+                    const r = frame.getBoundingClientRect(); const x = e.clientX - r.left; const y = e.clientY - r.top;
+                    pointer.style.left = (r.left + x) + 'px'; pointer.style.top = (r.top + y) + 'px';
+                    spawn(x,y);
+                    tip.style.left = x + 'px'; tip.style.bottom = (r.height - y + 12) + 'px';
+                });
+                frame.addEventListener('mouseenter', ()=>{ pointer.style.opacity = 1 });
+                frame.addEventListener('mouseleave', ()=>{ pointer.style.opacity = 0; tip.classList.remove('show') });
+
+                frame.addEventListener('click', ()=>{ details.classList.toggle('show') });
+                frame.tabIndex = 0; frame.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); details.classList.toggle('show') } });
+
+                setInterval(()=>{ if(parts.length>300) parts.splice(0,parts.length-220) },400);
+            })();
+        </script>
+    <script>
+            // Minimal safeguard: pause/hide heavy particle overlays so page content is visible
+        document.addEventListener('DOMContentLoaded', function(){
+            try{
+                if(window.tsParticles && tsParticles && tsParticles.dom && tsParticles.dom.length){
+                    tsParticles.dom().forEach(function(inst){
+                        try{ inst.pause(); }catch(e){}
+                    });
+                }
+            }catch(e){}
+
+            var cp = document.getElementById('cursorParticles');
+            if(cp) cp.style.display = 'none';
+
+            // ensure core containers are above any overlays
+            var elems = document.querySelectorAll('header, .navbar, .hero, main, .container, footer');
+            elems.forEach(function(el){ if(el) el.style.zIndex = 10000; });
+        });
+
+        // Initialize AOS
+        AOS.init({duration:700,once:true});
+
+        // Typed.js for hero roles
+        const typed = new Typed('.typing', {
+            strings: ['Data Analyst Associate', 'SQL Expert', 'Python Developer', 'Dashboard Designer'],
+            typeSpeed: 70,
+            backSpeed: 40,
+            backDelay: 1500,
+            loop: true
+        });
+
+        // Typed summary for professional summary lines
+        const summaryTyped = new Typed('#summaryTyped', {
+            strings: [
+                'Transform raw data into actionable insights using <span class="typed-gradient">SQL, Python, Power BI, and Excel.</span>',
+                'I build interactive dashboards, perform statistical analysis, and visualize data to drive strategic business decisions.',
+                'Data Analyst Associate • CompTIA Data+ • IBM Data Analyst Professional'
+            ],
+            typeSpeed: 40,
+            backSpeed: 18,
+            backDelay: 2800,
+            startDelay: 160,
+            loop: true,
+            showCursor: false,
+            smartBackspace: true
+        });
+
+        // tsParticles background
+        tsParticles.load('tsparticles', {
+            fpsLimit: 60,
+            background: { color: { value: 'transparent' } },
+            particles: {
+                number: { value: 60, density: { enable: true, area: 800 } },
+                color: { value: ['#60a5fa','#2dd4bf','#7c3aed'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.18 },
+                size: { value: { min: 1, max: 4 } },
+                move: { enable: true, speed: 0.9, direction: 'none', outMode: 'out' }
+            },
+            interactivity: {
+                events: { onHover: { enable: true, mode: 'repulse' }, onClick: { enable: true, mode: 'push' } },
+                modes: { repulse: { distance: 100 }, push: { quantity: 4 } }
+            },
+            detectRetina: true
+        });
+
+        // tsParticles cursor trail (glowing trail) - lightweight trail that follows pointer
+        try{
+            tsParticles.load('cursorParticles', {
+                particles: {
+                    number: { value: 0 },
+                    color: { value: ['#60a5fa','#2dd4bf','#9b7bff'] },
+                    shape: { type: 'circle' },
+                    size: { value: { min: 2, max: 6 } },
+                    opacity: { value: 0.85 },
+                    move: { enable: true, speed: 0.9, outModes: { default: 'destroy' } }
+                },
+                interactivity: {
+                    detectsOn: 'window',
+                    events: { onHover: { enable: true, mode: 'trail' }, onClick: { enable: false } },
+                    modes: { trail: { delay: 0.007, quantity: 3, particles: { color: { value: ['#60a5fa','#2dd4bf','#9b7bff'] }, size: { value: 4, random: { enable: true, minimumValue: 2 } }, opacity: { value: 0.9 } } } }
+                },
+                detectRetina: true
+            }, document.getElementById('cursorParticles'));
+        }catch(e){console.warn('cursorParticles failed', e)}
+
+        // Radial skill animations are handled by GSAP ScrollTrigger (see GSAP init later)
+
+        // Smooth scroll & active nav link
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+        function setActive() {
+            let index = sections.length;
+            while(--index && window.scrollY + 120 < sections[index].offsetTop){}
+            navLinks.forEach(l => l.classList.remove('active'));
+            const id = sections[index] ? sections[index].id : '';
+            document.querySelectorAll('.nav-link').forEach(n=>{
+                if(n.getAttribute('href')===('#'+id)) n.classList.add('active');
+            });
+        }
+        setActive(); window.addEventListener('scroll', setActive);
+
+        // Enable Bootstrap tooltips if needed
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.map(function (el) { return new bootstrap.Tooltip(el) })
+        </script>
+        <script>
+        // Global enhancements: ensure sections animate, skill-card hover ripples, tooltips and heading ripples
+        (function(){
+            // Add AOS to sections that don't have it
+            document.querySelectorAll('section').forEach(s=>{ if(!s.hasAttribute('data-aos')) s.setAttribute('data-aos','fade-up'); });
+            try{ AOS.refresh(); }catch(e){}
+
+            // Skill card interactivity: tooltip is set via title/data-bs-toggle attributes in markup; add ripple + GSAP icon pop
+            document.querySelectorAll('.skill-card').forEach(card=>{
+                const icon = card.querySelector('.skill-icon');
+                const radial = card.querySelector('.radial');
+                const prof = parseInt(card.getAttribute('data-proficiency')||'80',10);
+                // ensure tooltip text exists
+                const label = (card.querySelector('.skill-label')||{}).textContent || 'Skill';
+                card.setAttribute('title', `${label} — ${prof>=90? 'Expert' : prof>=75? 'Advanced' : 'Intermediate'}`);
+                card.setAttribute('data-bs-toggle','tooltip');
+
+                card.addEventListener('mouseenter', (e)=>{
+                    if(icon) gsap.to(icon, {scale:1.06, duration:0.22, ease:'power2.out'});
+                    if(radial){ const circumference = 2*Math.PI*42; const offset = circumference - (prof/100)*circumference; gsap.to(radial, {strokeDashoffset: offset, duration:0.9, ease:'power2.out'}); }
+                    // ripple
+                    if(icon){ const r = document.createElement('span'); r.className='icon-ripple'; r.style.width='18px'; r.style.height='18px'; r.style.left=(icon.clientWidth/2)+'px'; r.style.top=(icon.clientHeight/2)+'px'; r.style.background='radial-gradient(circle, rgba(96,165,250,0.18), rgba(45,212,191,0.06))'; icon.appendChild(r); gsap.fromTo(r, {scale:0.2, opacity:0.9}, {scale:8, opacity:0, duration:0.9, ease:'power2.out', onComplete: ()=> r.remove()}); }
+                });
+                card.addEventListener('mouseleave', ()=>{ if(icon) gsap.to(icon, {scale:1, duration:0.28}); });
+            });
+
+            // Re-init tooltips for any dynamically set titles
+            var tList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tList.map(function (el) { try{ return new bootstrap.Tooltip(el) }catch(e){} });
+
+            // Heading ripples
+            document.querySelectorAll('.section-heading').forEach(h=>{
+                h.style.position = h.style.position || 'relative';
+                h.addEventListener('mouseenter',(e)=>{
+                    const rect = h.getBoundingClientRect(); const rx = e.clientX - rect.left; const ry = e.clientY - rect.top;
+                    const r = document.createElement('span'); r.className='icon-ripple'; r.style.width='14px'; r.style.height='14px'; r.style.left=rx+'px'; r.style.top=ry+'px'; r.style.background='radial-gradient(circle, rgba(45,212,191,0.16), rgba(96,165,250,0.06))'; r.style.position='absolute'; h.appendChild(r); gsap.fromTo(r, {scale:0.2, opacity:0.9}, {scale:8, opacity:0, duration:0.9, ease:'power2.out', onComplete: ()=> r.remove()});
+                });
+            });
+        })();
+    </script>
+    <script>
+        // Project card interactivity: pointer trail + expand details
+        (function(){
+            const card = document.getElementById('project-mict');
+            if(!card) return;
+            const canvas = document.getElementById('projectTrail');
+            const ctx = canvas.getContext && canvas.getContext('2d');
+            const pointer = document.getElementById('projectPointer');
+
+            function resize(){
+                const r = card.getBoundingClientRect();
+                canvas.width = Math.round(r.width*2); canvas.height = Math.round(r.height*2);
+                canvas.style.width = r.width+'px'; canvas.style.height = r.height+'px';
+                ctx && ctx.setTransform(2,0,0,2,0,0);
+            }
+            resize(); window.addEventListener('resize', resize);
+
+            let particles = [];
+            function spawn(x,y){ if(!ctx) return; particles.push({x,y,vx:(Math.random()-0.5)*1.6,vy:(Math.random()-0.5)*1.6,r:1+Math.random()*2,life:30+Math.random()*30}) }
+            function draw(){ if(!ctx) return; ctx.clearRect(0,0,canvas.width/2,canvas.height/2); for(let i=particles.length-1;i>=0;i--){ const p = particles[i]; p.x+=p.vx; p.y+=p.vy; p.life--; const a = Math.max(0, p.life/60); if(p.life<=0){ particles.splice(i,1); continue } ctx.beginPath(); ctx.fillStyle = `rgba(96,165,250,${a})`; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(draw); }
+            requestAnimationFrame(draw);
+
+            card.addEventListener('mousemove', (e)=>{
+                const r = card.getBoundingClientRect(); const x = e.clientX - r.left; const y = e.clientY - r.top;
+                pointer.style.left = x+'px'; pointer.style.top = y+'px'; pointer.style.opacity = 1;
+                // spawn a few particles on move when hovered
+                spawn(x,y); if(Math.random()<0.2) spawn(x+Math.random()*6-3,y+Math.random()*6-3);
+            });
+            card.addEventListener('mouseenter', ()=>{ pointer.style.opacity = 1; card.classList.add('hovering') });
+            card.addEventListener('mouseleave', ()=>{ pointer.style.opacity = 0; card.classList.remove('hovering') });
+
+            // Click to expand details
+            card.addEventListener('click', (e)=>{ if(e.target.tagName.toLowerCase() === 'a') return; card.classList.toggle('expanded'); });
+            card.tabIndex = 0; card.addEventListener('keydown',(e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); card.classList.toggle('expanded') } });
+
+            // Limit particles periodically
+            setInterval(()=>{ if(particles.length>220) particles.splice(0,particles.length-180); },500);
+        })();
+    </script>
+    <script>
+        // Project cover interactions: image parallax, preview modal, tooltip and keyboard accessibility
+        (function(){
+            const card = document.getElementById('project-mict');
+            if(!card) return;
+            const media = card.querySelector('.project-media');
+            const thumb = card.querySelector('.project-thumb');
+            const previewBtn = card.querySelector('#openImgModal');
+            const modal = document.getElementById('imgModal');
+            const modalImg = document.getElementById('modalImg');
+            const imgClose = document.getElementById('imgClose');
+
+            // ensure Bootstrap tooltip for the cover link (title shown on hover)
+            try{ const coverLink = card.querySelector('.cover-link'); if(coverLink) new bootstrap.Tooltip(coverLink); }catch(e){}
+
+            // remove skeleton when image loaded
+            if(thumb){ thumb.addEventListener('load', ()=> thumb.classList.remove('skeleton')); }
+
+            // small parallax on hover over the media container (keeps cover-link clickable above image)
+            if(media && thumb){
+                media.addEventListener('mousemove', (e)=>{
+                    const r = media.getBoundingClientRect(); const dx = (e.clientX - r.left) - r.width/2; const dy = (e.clientY - r.top) - r.height/2;
+                    thumb.style.transform = `scale(1.06) translate(${dx*0.01}px, ${dy*0.01}px)`;
+                    // subtle glow
+                    thumb.style.boxShadow = '0 18px 40px rgba(45,212,191,0.06)';
+                });
+                media.addEventListener('mouseleave', ()=>{ thumb.style.transform=''; thumb.style.boxShadow=''; });
+            }
+
+            function closeModal(){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); }
+            imgClose && imgClose.addEventListener('click', closeModal);
+            modal && modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+            document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ if(modal.classList.contains('show')) closeModal(); } });
+        })();
+
+    </script>
+
+    <script>
+        // GSAP-driven site animations: hero, skills, timeline, pointer micro-interactions
+        (function(){
+            if(typeof gsap === 'undefined') return;
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero title glow + subtle morph
+            try{
+                const heroTitle = document.querySelector('.hero-title');
+                const typingEl = document.querySelector('.typing');
+                if(heroTitle){
+                    heroTitle.style.setProperty('--hero-glow','0px');
+                    gsap.to(heroTitle, {"--hero-glow": '18px', duration:1.6, repeat:-1, yoyo:true, ease:'sine.inOut'});
+                    gsap.to(heroTitle, {scale:1.02, duration:1.8, repeat:-1, yoyo:true, ease:'sine.inOut'});
+                }
+                if(typingEl){ gsap.to(typingEl, {opacity:0.9, y:2, duration:1.2, repeat:-1, yoyo:true, ease:'sine.inOut'}); }
+            }catch(e){console.warn('Hero GSAP init failed', e)}
+
+            // Achievements counters: animate on scroll into view
+            const counterElements = document.querySelectorAll('[data-target]');
+            const achievements = document.getElementById('achievements');
+            if(achievements && counterElements.length){
+                let countersStarted = false;
+                ScrollTrigger.create({
+                    trigger: achievements,
+                    start: 'top 70%',
+                    onEnter: ()=>{
+                        if(countersStarted) return;
+                        countersStarted = true;
+                        counterElements.forEach(el=>{
+                            const target = parseInt(el.getAttribute('data-target'), 10);
+                            const duration = 2.4;
+                            gsap.to(el, {
+                                innerText: target,
+                                duration: duration,
+                                snap: { innerText: 1 },
+                                ease: 'power2.out',
+                                onUpdate: function(){ el.innerText = Math.floor(parseInt(el.innerText, 10)); }
+                            });
+                        });
+                    }
+                });
+            }
+
+            // Achievement cards: hover ripple effect
+            document.querySelectorAll('.achievement-card').forEach(card=>{
+                card.addEventListener('mouseenter', (e)=>{
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const r = document.createElement('span');
+                    r.className = 'achievement-ripple';
+                    r.style.width = '20px';
+                    r.style.height = '20px';
+                    r.style.left = x + 'px';
+                    r.style.top = y + 'px';
+                    r.style.background = 'radial-gradient(circle, rgba(96,165,250,0.16), rgba(45,212,191,0.06))';
+                    card.appendChild(r);
+                    gsap.fromTo(r, 
+                        { scale: 0.2, opacity: 0.9 }, 
+                        { scale: 8, opacity: 0, duration: 0.9, ease: 'power2.out', onComplete: () => r.remove() }
+                    );
+                });
+            });
+
+            // Showcase cards: parallax and glow on hover
+            document.querySelectorAll('.showcase-card').forEach(card=>{
+                const media = card.querySelector('.showcase-media');
+                card.addEventListener('mousemove', (e)=>{
+                    if(!media) return;
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) - rect.width / 2;
+                    const y = (e.clientY - rect.top) - rect.height / 2;
+                    gsap.to(card, {
+                        rotationY: x * 0.015,
+                        rotationX: -y * 0.015,
+                        transformPerspective: 1000,
+                        transformOrigin: 'center',
+                        duration: 0.5,
+                        ease: 'power3.out'
+                    });
+                });
+                card.addEventListener('mouseleave', ()=>{
+                    gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.6, ease: 'power2.out' });
+                });
+            });
+
+            // Heading pointer particle burst when hovering the hero title
+            const heroArea = document.getElementById('hero');
+            function burstAt(x,y,count=8){
+                for(let i=0;i<count;i++){
+                    const p = document.createElement('span');
+                    p.style.position='fixed'; p.style.left=x+'px'; p.style.top=y+'px'; p.style.width='8px'; p.style.height='8px'; p.style.borderRadius='50%';
+                    p.style.background = i%2? 'rgba(45,212,191,0.9)' : 'rgba(96,165,250,0.9)'; p.style.pointerEvents='none'; p.style.zIndex=9999; document.body.appendChild(p);
+                    gsap.to(p, {x: (Math.random()-0.5)*120, y:(Math.random()-0.9)*120, scale:0.2, opacity:0, duration:0.9 + Math.random()*0.6, ease:'power2.out', onComplete:()=>p.remove()});
+                }
+            }
+            if(heroArea){
+                const title = heroArea.querySelector('.hero-title');
+                title && title.addEventListener('mouseenter', (e)=> burstAt(e.clientX,e.clientY,12));
+                title && title.addEventListener('mousemove', (e)=>{ if(Math.random()<0.06) burstAt(e.clientX,e.clientY,4); });
+            }
+
+            // Skill charts: animate radial circles using ScrollTrigger
+            document.querySelectorAll('.radial').forEach((circle, idx)=>{
+                const circumference = 2 * Math.PI * 40;
+                const percents = [100,95,90,95];
+                    // map percent from data-proficiency if available
+                    const parent = circle.closest('.skill-card');
+                    const pct = parent ? parseInt(parent.getAttribute('data-proficiency')|| percents[idx]||80) : (percents[idx]||80);
+                    const offset = circumference - (pct/100) * circumference;
+                    gsap.fromTo(circle, {strokeDashoffset: circumference}, {strokeDashoffset: offset, duration:1.2, ease:'power2.out', scrollTrigger:{ trigger: parent || circle.closest('.skill-wrap'), start:'top 85%' }});
+            });
+
+            // Bars + pie + db animations with GSAP for smooth interpolation
+            const barGroups = document.querySelectorAll('.bars');
+            barGroups.forEach(g=>{
+                const rects = g.querySelectorAll('rect');
+                g.addEventListener('mouseenter', ()=>{
+                    gsap.to(rects[0], {attr:{y:-52, height:52}, duration:0.6, ease:'power2.out'});
+                    gsap.to(rects[1], {attr:{y:-64, height:64}, duration:0.6, ease:'power2.out'});
+                    gsap.to(rects[2], {attr:{y:-36, height:36}, duration:0.6, ease:'power2.out'});
+                    gsap.to(rects[3], {attr:{y:-80, height:80}, duration:0.6, ease:'power2.out'});
+                });
+                g.addEventListener('mouseleave', ()=>{
+                    gsap.to(rects[0], {attr:{y:-28, height:28}, duration:0.45});
+                    gsap.to(rects[1], {attr:{y:-44, height:44}, duration:0.45});
+                    gsap.to(rects[2], {attr:{y:-18, height:18}, duration:0.45});
+                    gsap.to(rects[3], {attr:{y:-52, height:52}, duration:0.45});
+                });
+            });
+            // Pie
+            document.querySelectorAll('.pie-group').forEach(g=>{
+                g.addEventListener('mouseenter', ()=> gsap.to(g, {rotation:24, transformOrigin:'center center', duration:0.6, ease:'power2.out'}));
+                g.addEventListener('mouseleave', ()=> gsap.to(g, {rotation:0, duration:0.5}));
+            });
+            // DB pulse
+            document.querySelectorAll('.db').forEach(g=>{
+                g.addEventListener('mouseenter', ()=> gsap.to(g, {scale:1.06, transformOrigin:'center center', duration:0.45}));
+                g.addEventListener('mouseleave', ()=> gsap.to(g, {scale:1, duration:0.35}));
+            });
+
+            // Timeline hover: highlight and nudge
+            document.querySelectorAll('.timeline-item').forEach(item=>{
+                item.addEventListener('mouseenter', ()=> gsap.to(item, {y:-6, boxShadow:'0 20px 40px rgba(2,6,12,0.35)', duration:0.28}));
+                item.addEventListener('mouseleave', ()=> gsap.to(item, {y:0, boxShadow:'0 0 0 rgba(0,0,0,0)', duration:0.28}));
+            });
+
+            // Page transition: fade in on load
+            gsap.from('.page-fade', {opacity:0, y:8, duration:0.6, ease:'power2.out'});
+
+            // Stagger micro-interactions for project cards
+            gsap.utils.toArray('.project-card').forEach((card, i)=>{
+                card.addEventListener('mousemove', (e)=>{
+                    const r = card.getBoundingClientRect(); const dx = (e.clientX - r.left) - r.width/2; const dy = (e.clientY - r.top) - r.height/2;
+                    gsap.to(card, {rotationY: dx * 0.02, rotationX: -dy * 0.02, transformPerspective:800, transformOrigin:'center', duration:0.4, ease:'power3.out'});
+                });
+                card.addEventListener('mouseleave', ()=> gsap.to(card, {rotationY:0, rotationX:0, duration:0.5}));
+            });
+
+            // Scroll-linked storytelling: pin hero title briefly on scroll into view
+            if(document.querySelector('#hero')){
+                ScrollTrigger.create({trigger:'#hero', start:'top top', end:'bottom top+=80', scrub:0.5});
+            }
+        })();
+    </script>
+    <script>
+        // Site-wide pointer, magnetic buttons, progress nav, and accessibility helpers
+        (function(){
+            const cursor = document.getElementById('globalCursor');
+            const progress = document.querySelector('#progressNav .progress-inner');
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Cursor movement and states
+            let cx = -100, cy = -100;
+            function moveCursor(x,y){ if(!cursor) return; cursor.style.left = x + 'px'; cursor.style.top = y + 'px'; }
+            document.addEventListener('mousemove', (e)=>{
+                if(prefersReduced) return;
+                moveCursor(e.clientX, e.clientY); cursor.style.opacity = 1; cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+            });
+            document.addEventListener('mouseleave', ()=>{ if(cursor) cursor.style.opacity = 0 });
+
+            // Contextual states: over links/buttons show expand
+            function setCursorState(state){ if(!cursor) return; if(state==='focus'){ cursor.style.transform='translate(-50%,-50%) scale(1.18)'; } else if(state==='click'){ cursor.style.transform='translate(-50%,-50%) scale(.86)'; } else { cursor.style.transform='translate(-50%,-50%) scale(1)'; } }
+            ['a','button','.magnetic','.project-card','.elem'].forEach(sel=>{
+                document.querySelectorAll(sel).forEach(el=>{
+                    el.addEventListener('mouseenter', ()=> setCursorState('focus'));
+                    el.addEventListener('mouseleave', ()=> setCursorState(''));
+                    el.addEventListener('mousedown', ()=> setCursorState('click'));
+                    el.addEventListener('mouseup', ()=> setCursorState('focus'));
+                })
+            });
+
+            // Magnetic buttons: translate inner element toward cursor
+            function initMagnet(){ document.querySelectorAll('.magnetic').forEach(btn=>{
+                const target = btn.querySelector('.magnet-target') || btn;
+                btn.addEventListener('mousemove', e=>{
+                    const r = btn.getBoundingClientRect(); const dx = (e.clientX - r.left) - r.width/2; const dy = (e.clientY - r.top) - r.height/2;
+                    const tx = dx * 0.12, ty = dy * 0.12;
+                    target.style.transform = `translate(${tx}px, ${ty}px)`;
+                });
+                btn.addEventListener('mouseleave', ()=>{ target.style.transform = '' });
+            }) }
+            initMagnet();
+
+            // Progress nav: show scroll progress and act as quick nav to sections
+            const sections = Array.from(document.querySelectorAll('section[id]'));
+            function updateProgress(){ const total = document.documentElement.scrollHeight - window.innerHeight; const pct = (window.scrollY / Math.max(1,total)) * 100; if(progress) progress.style.width = pct + '%'; }
+            updateProgress(); window.addEventListener('scroll', updateProgress);
+            document.getElementById('progressNav').addEventListener('click',(e)=>{ const x = e.clientX; const w = e.currentTarget.getBoundingClientRect().width; const pct = x/w; const targetY = Math.round(pct * (document.documentElement.scrollHeight - window.innerHeight)); window.scrollTo({top: targetY, behavior:'smooth'}); });
+
+            // Staggered reveal helper (small enhancement over AOS) for buttons/cards
+            function staggerReveals(){ document.querySelectorAll('[data-aos]').forEach((el, idx)=>{ el.style.transitionDelay = (idx * 80) + 'ms'; }); }
+            staggerReveals();
+
+            // Accessibility: ensure keyboard focus styles
+            document.addEventListener('keyup', (e)=>{ if(e.key === 'Tab'){ document.documentElement.classList.add('show-focus'); } });
+
+            // Lazy-load fallback: mark images with loading attr where possible
+            document.querySelectorAll('img').forEach(img=>{ if(!img.hasAttribute('loading')) img.setAttribute('loading','lazy'); img.classList.add('skeleton'); img.addEventListener('load', ()=> img.classList.remove('skeleton')); });
+
+            // Respect reduced motion: disable particle heavy loops if needed
+            if(prefersReduced){ try{ window.tsParticles && window.tsParticles.dom().forEach(p=>p.pause()); }catch(e){} }
+        })();
+    </script>
+    <script>
+        // Enhanced headings: Typed.js per heading that APPENDS words (captures typed word then adds a span),
+        // uses GSAP ScrollTrigger to replay, and pointer interactions per-word.
+        (function(){
+            if(typeof Typed === 'undefined' || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // global particle burst (used for heading hover)
+            function burstAt(x,y,count=8){
+                for(let i=0;i<count;i++){
+                    const p = document.createElement('span');
+                    p.style.position='fixed'; p.style.left=x+'px'; p.style.top=y+'px'; p.style.width='8px'; p.style.height='8px'; p.style.borderRadius='50%';
+                    p.style.background = i%2? 'rgba(45,212,191,0.92)' : 'rgba(96,165,250,0.92)'; p.style.pointerEvents='none'; p.style.zIndex=99999; document.body.appendChild(p);
+                    gsap.to(p, {x: (Math.random()-0.5)*120, y:(Math.random()-0.9)*120, scale:0.2, opacity:0, duration:0.9 + Math.random()*0.6, ease:'power2.out', onComplete:()=>p.remove()});
+                }
+            }
+
+            const headings = Array.from(document.querySelectorAll('.section-heading'));
+
+            headings.forEach((h, idx)=>{
+                const text = h.textContent.trim();
+                const words = text.split(/\s+/).filter(Boolean);
+                // prepare structure: hidden temp target for Typed, and visible container for word spans
+                h.innerHTML = '';
+                const wordsContainer = document.createElement('span'); wordsContainer.className='words-container'; h.appendChild(wordsContainer);
+                const temp = document.createElement('span'); temp.id = 'typed-temp-'+idx; temp.style.position='fixed'; temp.style.left='-9999px'; temp.style.top='-9999px'; temp.style.opacity='0'; document.body.appendChild(temp);
+
+                function wrapAndAttach(word){
+                    const span = document.createElement('span'); span.className = 'heading-word'; span.textContent = word; wordsContainer.appendChild(span); wordsContainer.appendChild(document.createTextNode(' '));
+                    // pointer hover per-word
+                    span.addEventListener('mouseenter', (e)=>{
+                        span.classList.add('active');
+                        gsap.to(span, {scale:1.04, y:-3, duration:0.28, ease:'power2.out'});
+                        burstAt(e.clientX, e.clientY, 6);
+                    });
+                    span.addEventListener('mouseleave', ()=>{ span.classList.remove('active'); gsap.to(span, {scale:1, y:0, duration:0.28}); });
+                    // keyboard focus
+                    span.tabIndex = 0; span.addEventListener('focus', ()=>{ span.classList.add('active'); }); span.addEventListener('blur', ()=>{ span.classList.remove('active'); });
+                }
+
+                // Start typed sequence: types each word into temp then appends it to visible container
+                let typedInstance = null;
+                function startTyped(){
+                    if(prefersReduced) {
+                        // reduced motion: just show words
+                        wordsContainer.innerHTML = words.map(w=>`<span class="heading-word fallback-white">${w}</span>`).join(' ');
+                        return;
+                    }
+                    // reset visible container
+                    wordsContainer.innerHTML = '';
+                    // destroy old instance if present
+                    if(typedInstance){ try{ typedInstance.destroy(); }catch(e){} }
+                    typedInstance = new Typed(temp, {
+                        strings: words,
+                        typeSpeed: 40,
+                        backSpeed: 20,
+                        backDelay: 220,
+                        startDelay: 120,
+                        loop: false,
+                        showCursor: false,
+                        onStringTyped: function(pos){
+                            // capture typed word and append
+                            const typedText = temp.textContent || temp.innerText || words[pos];
+                            wrapAndAttach(typedText);
+                            // quickly clear temp so next word types freshly
+                            temp.textContent = '';
+                        },
+                        onComplete: function(){ try{ typedInstance.destroy(); }catch(e){} }
+                    });
+                }
+
+                // ScrollTrigger to replay typing when heading enters view
+                ScrollTrigger.create({ trigger: h, start: 'top 85%', onEnter: ()=> startTyped(), onEnterBack: ()=> startTyped(), once:false });
+
+                // hover ripple on heading container
+                h.addEventListener('mouseenter', (e)=>{ if(prefersReduced) return; const rect = h.getBoundingClientRect(); const x = e.clientX; const y = e.clientY; burstAt(x,y,10); h.classList.add('hover-glow'); });
+                h.addEventListener('mouseleave', ()=>{ h.classList.remove('hover-glow'); });
+
+                // focus accessibility triggers
+                h.tabIndex = 0; h.addEventListener('focus', ()=> startTyped());
+            });
+
+            // Global pointer trail on canvas
+            (function(){
+                const canvas = document.getElementById('cursorTrail'); if(!canvas) return; const ctx = canvas.getContext('2d'); let parts=[]; function resize(){ const dpr = window.devicePixelRatio||1; canvas.width = Math.round(window.innerWidth * dpr); canvas.height = Math.round(window.innerHeight * dpr); canvas.style.width = window.innerWidth+'px'; canvas.style.height = window.innerHeight+'px'; ctx.setTransform(dpr,0,0,dpr,0,0);} resize(); window.addEventListener('resize', resize);
+                function spawn(x,y){ parts.push({x,y,vx:(Math.random()-0.5)*1.4,vy:(Math.random()-0.5)*1.4,r:1+Math.random()*2,life:40+Math.random()*30}) }
+                document.addEventListener('mousemove',(e)=>{ spawn(e.clientX,e.clientY); if(Math.random()<0.04) spawn(e.clientX+Math.random()*8-4,e.clientY+Math.random()*8-4); });
+                function loop(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(let i=parts.length-1;i>=0;i--){ const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.life--; const a = Math.max(0, p.life/60); if(p.life<=0){ parts.splice(i,1); continue } ctx.beginPath(); ctx.fillStyle = `rgba(96,165,250,${a*0.9})`; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(loop); } requestAnimationFrame(loop);
+            })();
+
+            // Theme toggle (connect to button if present)
+            const themeToggle = document.getElementById('themeToggle'); if(themeToggle){ themeToggle.addEventListener('click', ()=>{ const cur = document.documentElement.getAttribute('data-theme'); if(cur === 'light'){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent = '🌓'; } else { document.documentElement.setAttribute('data-theme','light'); themeToggle.textContent = '🌞'; } }); }
+        })();
+    </script>
+        <script>
+            // Last-resort visibility safeguard (runs after other scripts)
+            window.addEventListener('load', function(){
+                try{
+                    document.querySelectorAll('section, header, nav, footer, .container').forEach(el=>{
+                        if(el){ el.style.display = 'block'; el.style.visibility = 'visible'; el.style.opacity = '1'; el.style.zIndex = '2000'; }
+                    });
+                    var tp = document.getElementById('tsparticles'); if(tp){ tp.style.opacity = '0.08'; tp.style.pointerEvents = 'none'; }
+                    var cp = document.getElementById('cursorParticles'); if(cp){ cp.style.opacity = '0.08'; cp.style.pointerEvents = 'none'; }
+                    var ct = document.getElementById('cursorTrail'); if(ct){ ct.style.display = 'none'; }
+                    console.log('DEBUG: visibility safeguard applied');
+                }catch(e){ console.warn('safeguard failed', e); }
+            });
+        </script>
+</body>
+</html>
