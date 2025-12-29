@@ -13,54 +13,64 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 block: 'start'
             });
             // Close mobile menu if open
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
+            if (navLinks && hamburger) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
         }
     });
 });
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('active');
-});
+if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    });
+}
 
 // Navbar background change on scroll with throttling
 const navbar = document.querySelector('.navbar');
 let ticking = false;
 
 function updateNavbar() {
-    if (window.scrollY > 50) {
-        navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
-    } else {
-        navbar.style.backgroundColor = 'var(--bg-color)';
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+        } else {
+            navbar.style.backgroundColor = 'var(--bg-color)';
+        }
     }
     ticking = false;
 }
 
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        window.requestAnimationFrame(updateNavbar);
-        ticking = true;
-    }
-}, { passive: true });
+if (navbar) {
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateNavbar);
+            ticking = true;
+        }
+    }, { passive: true });
+}
 
 // Form submission handler
 const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    
-    // Here you would typically send the form data to a server
-    // For now, we'll just show an alert
-    alert(`Thank you for your message, ${name}! I'll get back to you soon at ${email}.`);
-    
-    // Reset form
-    contactForm.reset();
-});
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        
+        // Here you would typically send the form data to a server
+        // For now, we'll just show an alert
+        alert(`Thank you for your message, ${name}! I'll get back to you soon at ${email}.`);
+        
+        // Reset form
+        contactForm.reset();
+    });
+}
 
 // Add animation on scroll
 const observerOptions = {
